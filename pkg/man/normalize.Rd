@@ -1,0 +1,50 @@
+\name{normalize}
+\alias{normalize}
+\title{Normalize a metabolomics dataset}
+\usage{
+  normalize(object, method, segments = NULL, ...)
+}
+\arguments{
+  \item{object}{an \code{ExpressionSet}}
+
+  \item{method}{the desired method}
+
+  \item{segments}{normalization in a cross-validation
+  setup, only to use for validation/QC purposes.}
+
+  \item{...}{passed on to \code{normFit} and
+  \code{normPred}}
+}
+\value{
+  the normalized dataset
+}
+\description{
+  Normalization methods for metabolomics data
+}
+\details{
+  Wrapper function for \code{normFit} and \code{normPred}
+}
+\examples{
+data(mix)
+normalize(mix, "crmn", factor="type", ncomp=3)
+#other methods
+normalize(mix, "one")
+normalize(mix, "avg")
+normalize(mix, "nomis")
+normalize(mix, "t1")
+normalize(mix, "ri")
+normalize(mix, "median")
+normalize(mix, "totL2")
+## can also do normalization with matrices
+Y <- exprs(mix)
+G <- with(pData(mix), model.matrix(~-1+type))
+isIS <- with(fData(mix), tag == "IS")
+normalize(Y, "crmn", factor=G, ncomp=3, standards=isIS)
+}
+\author{
+  Henning Redestig
+}
+\seealso{
+  \code{normFit}, \code{normPred}
+}
+

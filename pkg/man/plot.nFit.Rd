@@ -1,0 +1,41 @@
+\name{plot.nFit}
+\alias{plot,nFit-method}
+\alias{plot.nFit}
+\title{Plot a statistics for CRMN normalization model}
+\usage{
+  \method{plot}{nFit} (x, y = NULL, ...)
+}
+\arguments{
+  \item{x}{an \code{nFit} object}
+
+  \item{y}{not used}
+
+  \item{...}{passed on to the scatter plot calls}
+}
+\value{
+  nothing
+}
+\description{
+  Simple plot function for a CRMN normalization model.
+}
+\details{
+  Shows Tz and the optimization (if computed) of the PCA
+  model. The number of components used for normalization
+  should not exceed the maximum indicated by Q2. The
+  structure shown in the Tz plot indicate the analytical
+  variance which is exactly independent of the experimental
+  design. The corresponding loading plot shows how this
+  structure is capture by the used ISs.
+}
+\examples{
+data(mix)
+nfit <- normFit(mix, "crmn", factors="type", ncomp=2)
+plot(nfit)
+}
+\author{
+  Henning Redestig
+}
+\seealso{
+  \code{slplot}
+}
+

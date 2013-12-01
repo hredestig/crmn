@@ -1,0 +1,297 @@
+\documentclass[a4paper]{article}
+
+%\VignetteIndexEntry{Introduction/Tutorial}
+
+\usepackage{hyperref}
+
+\title{The crmn Package}
+\author{Henning Redestig\\
+\texttt{henning@psc.riken.jp}\\
+RIKEN Plant Science Center\\
+Yokohama, Japan\\
+\url{http://www.metabolome.jp/}
+}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\section*{Overview}
+
+CRMN (Cross-contribution Robust Multiple standard Normalization) is a
+normalization method that can be used to normalize data that has been
+generated using \emph{internal standards} (ISs). It is mainly intended
+(but not restricted) to normalize GC-MS metabolomics data. An IS is a
+chemical compound that is added to the sample in a known concentration
+and can be used to remove bias that arise from technical
+variation. Unfortunately, sometimes analytes may directly cause
+variation in these standards thereby rendering them difficult to use
+for normalization purposes.
+
+CRMN attempts to solve this issue by correcting the ISs for covariance
+with the experimental design before using them for normalization. In
+short, this achieved by the following algorithm:
+\begin{enumerate}
+\item Pre-process data by log-transforming and $z$-transformation.
+\item Divide data into analytes, $Y_A$, and standards, $Y_S$.
+\item Remove the correlation between experimental design matrix, $G$
+  and the $Y_S$ using linear regression.
+\item Perform PCA on the residual of the regression model between
+  $Y_S$ and $G$ to extract the systematic error, $T_Z$.
+\item Remove correlation between $Y_A$ and $T_Z$ using linear
+  regression.
+\item Undo pre-processing steps.
+\end{enumerate}
+
+Please see Redestig et al. \cite{RedestigXXXX} further description.
+
+\section{Normalization methods}
+
+The package comes with access to several different normalization
+methods to use as reference or alternative to the CRMN method. These are:
+
+\begin{description}
+\item[NOMIS] The method proposed by Sysi-Aho et
+  al. \cite{SysiAho2007}. Note that this implementation was not done
+  by the authors of the NOMIS method and any errors should be blamed
+  on author of this package.
+\item[One] Divide each analyte by the abundance estimate of a single
+  user-defined IS. Also known as \emph{Single}.
+\item[RI] Divide each analyte by the abundance estimate of the IS that
+  is closest in terms of its retention index.
+\item[totL2] Does not use internal standards, normalization is done by
+  ensuring that the square sum of each sample is the same.
+\item[Median/Avg] Does not use internal standards, normalization is done by
+  ensuring that the median/average of each sample equals one.
+\end{description}
+
+\section{Getting started}
+
+\paragraph{Installing the package:} 
+
+For Windows, start \texttt{R} and select the \texttt{Packages} menu,
+then \texttt{Install package from local zip file}.  Find and highlight
+the location of the zip file and click on \texttt{open}.
+
+For Linux/Unix, use the usual command \texttt{R CMD INSTALL} or use
+the command \texttt{install.packages} from within an \texttt{R}
+session.
+
+\paragraph{Loading the package:} 
+
+To load the \texttt{crmn} package in your \texttt{R} session, type
+\texttt{library(crmn)}:
+
+<<load>>=
+library(crmn)
+help(package="crmn")
+@ 
+
+\paragraph{Help files:} 
+
+Detailed information on \texttt{crmn} package functions can be
+obtained from the help files.  For example, to get a description of
+the normalization function \texttt{normalize} type
+\texttt{help("normalize")}.
+
+\paragraph{Sample data:} 
+
+A sample data set is included under the name \texttt{mix}. This data
+has 46 analytes of which 11 are internal standards. There are 42
+samples containing known compositions of the measured analytes (see
+Redestig et al. (Unpublished)). The samples were measured in three
+different batches as indicated in the phenotypical data. 
+
+\section{Examples}
+
+\subsection{Input data}
+
+There are two slightly different flavors for how the data can be
+provided to the normalization functions. One way is to use the
+\texttt{ExpressionSet} object type as defined by the Biobase
+package. This is convenient because object type holds both information
+about the samples (columns) and the analytes (rows) of the data matrix
+and gives programmatically useful ways to access the different types
+of data. To use this way you must first format your data to such an
+object, please read the documentation from Biobase on how to do
+this. The \texttt{ExpressionSet}-object must contain information about
+which features are the internal standards coded by a \texttt{tag} (or
+another column name but then you have to specify the ``where''
+argument to \texttt{analytes} and \texttt{standards}) component which
+should be equal \texttt{"IS"} (or something else which you have to
+specify via the \texttt{what} argument) for the standards. To use the
+\texttt{RI} method the feature data must also contain the retention
+index of each analyte. See the dataset \texttt{mix} for an example.
+
+Alternatively you can provide the data as a simple matrix (as for
+example read by the \texttt{read.table} function). In that case you
+must make sure to always pass the extra argument \texttt{standards}
+which is a logical vector indicating which rows are the internal
+standards. You must also specify the design matrix to the experiment
+yourself. This is of course an option when using an
+\texttt{ExpressionSet} as well.
+
+\subsection{Normalization of a \texttt{ExpressionSet}}
+
+<<mix-example>>=
+data(mix)
+head(fData(mix))[,1:4]
+head(pData(mix))
+@ %
+Division of the dataset should now be possible as following.
+<<div>>=
+Ys <- standards(mix)
+Ya <- analytes(mix)
+dim(Ys)
+dim(Ya)
+@ %
+These two functions must work as they should for your data too (if you want to the the ExpressionSet interface, otherwise see Section \ref{sec:martrix}) so make sure that they do.
+
+To proceed with normalization we first fit a normalization model. The
+complexity, number of principal components, is decided by the
+cross-validation functionality of the \emph{pcaMethods} package. To
+use CRMN we also need access to the experimental design. This can be
+done automatically by specifying the relevant factors in the
+\texttt{pData} object of the data or by directly providing a design
+matrix. I.e:
+<<nfit-eset>>=
+nfit <- normFit(mix, "crmn", factor="type", ncomp=2)
+@ %
+Is the same as doing:
+<<nfit-matrix>>=
+G <- model.matrix(~-1+mix$type)
+nfit <- normFit(mix, "crmn", factor=G, ncomp=2)
+@ %
+
+We proceed by not specifying the complexity but letting the cross-validation
+take care of this step. 
+<<nfit-eset-w-q2>>=
+nfit <- normFit(mix, "crmn", factor="type")
+#complexty (number of PC's):
+sFit(nfit)$ncomp
+@ %
+
+The variance that CRMN identified as systematic error can be
+visualized using \texttt{slplot}, see Figure \ref{fig:tz}.
+
+\begin{figure}[hbt!]
+  \centering
+<<tz, fig=true, width=8, height=4>>=
+slplot(sFit(nfit)$fit$pc, scol=as.integer(mix$runorder))
+@ 
+\caption{PCA of the systematic error $T_Z$. Colors correspond to the
+  known batches.}
+  \label{fig:tz}
+\end{figure}
+
+The output from \texttt{normFit} is an object of class \texttt{nFit}
+and has a simple plot and print/show function which can give basic
+statistics about the normalization model, see Figure \ref{fig:plot}
+\begin{figure}[hbt!]
+  \centering
+<<plot, fig=true, width=12, height=4>>=
+nfit
+plot(nfit)
+@ 
+\caption{Basic plot function.}
+  \label{fig:plot}
+\end{figure}
+
+
+To normalize the data we predict the training data. Note that we could
+also have held some samples out from the training to obtain
+sample-independent normalization (potentially useful for quality
+control purposes).
+
+<<norm>>=
+normed.crmn <- normPred(nfit, mix, factor="type")
+@ %
+
+We can compare the result with other methods. Now we do this using the
+wrapper function \texttt{normalize} that combines \texttt{normFit} and
+\texttt{normPred}. See side-by-side PCA score plots of CRMN normalized
+data versus \emph{One} and NOMIS normalized data in Figure
+\ref{fig:compare}.
+<<alternative>>=
+normed.one <- normalize(mix, "one", one="Hexadecanoate_13C4")
+normed.nomis <- normalize(mix, "nomis")
+@ %
+
+\begin{figure}[hbt!]
+\centering
+<<compare, fig=true, width=15, height=5>>=
+
+pca.crmn <- pca(scale(log(t(exprs(normed.crmn)))))
+pca.one <- pca(scale(log(t(exprs(normed.one)))))
+pca.nomis <- pca(scale(log(t(exprs(normed.nomis)))))
+par(mfrow=c(1,3))
+plot(scores(pca.one), col=as.integer(mix$type),
+     pch=as.integer(mix$runorder),
+     main="Single IS")
+plot(scores(pca.nomis), col=as.integer(mix$type),
+     pch=as.integer(mix$runorder),
+     main="NOMIS")
+plot(scores(pca.crmn), col=as.integer(mix$type),
+     pch=as.integer(mix$runorder),
+     main="CRMN")
+
+@ %
+\caption{\label{fig:compare} PCA of the \texttt{mix} using three
+  different normalizations. Colors indicate the true concentration
+  groups and plot character indicate the different batches (unwanted
+  effect).}
+\end{figure}
+
+\clearpage{}
+
+\subsection{Normalization of a \texttt{matrix}}
+\label{sec:matrix}
+First we construct the required input parameters. This would of course
+normally be done by using \texttt{read.table} to read data as obtained
+by programs such as TargetSearch, HDA, metAlign etc.
+<<mix-example>>=
+Y <- exprs(mix)
+replicates <- factor(mix$type)
+G <- model.matrix(~-1+replicates)
+isIS <- fData(mix)$tag == 'IS'
+@ %
+Division of the dataset should now be possible as following (results hidden).
+<<div, results=hide>>=
+standards(Y, isIS)
+analytes(Y, isIS)
+@ %
+
+The main business is the same as when normalizing an
+\texttt{ExpressionSet} except that we now have to remember to pass the
+vector speciying the standards.
+<<nfit1>>=
+nfit <- normFit(Y, "crmn", factors=G, ncomp=2, standards=isIS)
+@ %
+To normalize the data predict the training data. 
+<<norm>>=
+normed.crmn <- normPred(nfit, Y, factors=G, standards=isIS, ncomp=2)
+@ %
+and this could also have been done directly by:
+<<alternative>>=
+normed.crmn <- normalize(Y, "crmn", factors=G, standards=isIS, ncomp=2)
+@ %
+
+\clearpage{}
+
+\begin{thebibliography}{RedestigXXXX}
+
+\bibitem{RedestigXXXX} Redestig, H., Fukushima, A., H., Stenlud,
+  Moritz, T., Arita, M., Saito, K. and Kusano, M. {\sl Compensation
+    for systematic cross-contribution improves normalization of mass
+    spectrometry based metabolomics data} Anal Chem, 2009, 81,
+  7974-7980
+  
+\bibitem{SysiAho2007} Sysi-Aho, M., Katajamaa, M., Yetukuri, L. and
+  Oresic, M {\sl Normalization method for metabolomics data using
+    optimal selection of multiple internal standards}
+  BMC Bioinformatics, 2007, 8, 93 
+
+\end{thebibliography}
+
+
+\end{document}

@@ -1,0 +1,31 @@
+\name{standards_other}
+\alias{standards,data.frame,logical-method}
+\alias{standards,matrix,logical-method}
+\alias{standards_other}
+\title{Accessor for the Internal Standards}
+\usage{
+  standards_other(object, standards, ...)
+}
+\arguments{
+  \item{object}{an \code{matrix} or \code{data.frame}}
+
+  \item{standards}{a logical vector indicating which rows
+  are internal standards}
+
+  \item{...}{not used}
+}
+\value{
+  subsetted dataset
+}
+\description{
+  Subset an data set to only contain the labeled internal
+  standards.
+}
+\examples{
+data(mix)
+standards(exprs(mix), fData(mix)$tag == 'IS')
+}
+\author{
+  Henning Redestig
+}
+

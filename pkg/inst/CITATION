@@ -1,0 +1,15 @@
+citHeader("")
+
+citEntry(entry="article",
+    title = "Compensation for systematic cross-contribution improves normalization
+	of mass spectrometry based metabolomics data",
+    author = "Henning Redestig and Atsushi Fukushima and Hans Stenlund and Thomas Moritz and Masanori Arita and Kazuki Saito and Miyako Kusano",
+    journal = "Analytical Chemistry",
+    year = 2009,
+    pages ="7974-7980",
+    volume = "81",
+    textVersion = 
+    paste("Redestig, H.; Fukushima, A.; Stenlund, H.; Moritz, T.; Arita, M.; Saito, K. & Kusano, M. Compensation for systematic cross-contribution improves normalization of mass spectrometry based metabolomics data Anal Chem, 2009, 81, 7974-7980")
+    )
+
+citFooter("This free open-source software implements academic research by the authors and co-workers. If you use it, please support the project by citing the appropriate journal articles.")

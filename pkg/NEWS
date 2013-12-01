@@ -1,0 +1,35 @@
+# -*- org -*-
+
+* Version 0.0.16
+the totL2 now also works on matrices with missing data by temporarily setting NA to zero.
+* Version 0.0.15
+** DONE Error with method 'one'
+   SCHEDULED: <2010-05-14 Fri> CLOSED: [2010-05-14 Fri 11:18]
+
+should have worked but croaked:
+
+: Found missing or negative values - applying imputation using ppca
+: Error in solve.default(CtC) : 
+:   system is computationally singular: reciprocal condition number = 0
+: In addition: Warning message:
+: In pca(lsta, method = "ppca") :
+:   more components than matrix columns requested
+: Error in completeObs(pca(lsta, method = "ppca")) : 
+:   error in evaluating the argument 'object' in selecting a method for : function 'completeObs'
+
+[[file:R/norm.R::one][fixed]], dont do pca on single column data and never for method one.
+
+* Version 0.0.14 <2010-01-14 Thu>
+- Changed the warning about imputing missing values to a message
+  instead as imputation not necessarily is anything that needs the
+  user's attention.
+- More adaptations for using both pcaMethods 1.24.0 and 1.27.2
+- The column name in fData and what it should equal for ISs can now be
+  set the user. Asked by Pernilla Lindén.
+* Version 0.0.12 <2010-01-08 Fri>
+- Bugfixes and adapations to make crmn work with pre 1.26.0 versions
+  of pcaMethods.
+* Version 0.0.10 <2010-01-04 Mon>
+- The pcaMethods package now contain Krzanowski style cross-validation
+  which yields more stable results and crmn now use this CV by
+  default.

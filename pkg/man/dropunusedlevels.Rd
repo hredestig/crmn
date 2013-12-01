@@ -1,0 +1,20 @@
+\name{dropunusedlevels}
+\alias{dropunusedlevels}
+\title{Drop unused levels}
+\usage{
+  dropunusedlevels(x)
+}
+\arguments{
+  \item{x}{the data frame}
+}
+\description{
+  Drop unused factor levels in a data frame.
+}
+\examples{
+iris[1:10,]$Species
+dropunusedlevels(iris[1:10,])$Species
+}
+\author{
+  Henning Redestig
+}
+
