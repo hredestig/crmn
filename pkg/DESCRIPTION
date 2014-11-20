@@ -3,7 +3,7 @@ Version: 0.0.20
 Date: 2012-06-19
 Author: Henning Redestig
 Maintainer: Henning Redestig <henning.red@gmail.com>
-Title: CCMN and other noRMalizatioN methods for metabolomics data
+Title: CCMN and Other Normalization Methods for Metabolomics Data
 Depends:
     pcaMethods (>= 1.56.0),
     Biobase,
