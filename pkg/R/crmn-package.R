@@ -19,6 +19,9 @@
 #' @aliases crmn
 #' @docType package
 #' @title CRMN
+#' @import Biobase
+#' @import methods
+#' @import pcaMethods
 #' @author Henning Redestig
 NULL
 

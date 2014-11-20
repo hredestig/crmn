@@ -42,7 +42,8 @@ standardsFit <- function(object, factors, ncomp=NULL, lg=TRUE, fitfunc=lm, ...) 
   X <- makeX(object, factors)
 
   if(lg)
-    lsta <- log2(t(mexprs(standards(object, ...)))) else
+    lsta <- log2(t(mexprs(standards(object, ...))))
+  else
     lsta <- t(mexprs(standards(object, ...)))
   clsta <- scale(lsta)
   means <- attr(clsta, "scaled:center")

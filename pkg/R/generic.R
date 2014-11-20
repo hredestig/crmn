@@ -2,10 +2,9 @@
 ##' @include classes.R
 ##' @include misc.R
 
-setGeneric("model", function(object, ...)
-           standardGeneric("model"))
-setGeneric("method", function(object, ...)
-           standardGeneric("method"))
+##' @name model-methods
+##' @aliases model
+setGeneric("model", function(object, ...) standardGeneric("model"))
 ##' Get the model
 ##'
 ##' @title Accessor for the model
@@ -14,10 +13,14 @@ setGeneric("method", function(object, ...)
 ##' @param ... not used
 ##' @return the model (content differs between normlization models)
 ##' @author Henning Redestig
-##' @aliases model model,nFit-method
+##' @aliases model,nFit-method
 ##' @exportMethod model
+##' @name model-methods
 setMethod("model", signature(object="nFit"), function(object) object@model)
 
+##' @name method-methods
+##' @aliases method
+setGeneric("method", function(object, ...) standardGeneric("method"))
 ##' Get the method
 ##'
 ##' @title Accessor for the method
@@ -26,14 +29,15 @@ setMethod("model", signature(object="nFit"), function(object) object@model)
 ##' @param ... not used
 ##' @return the method (content differs between normlization methods)
 ##' @author Henning Redestig
-##' @aliases method method,nFit-method
+##' @aliases method,nFit-method
 ##' @importFrom pcaMethods method
 ##' @exportMethod method
+##' @name method-methods
 setMethod("method", signature(object="nFit"), function(object) object@method)
 
-setGeneric("sFit", function(object, ...)
-           standardGeneric("sFit"))
-
+##' @name sFit-method
+##' @aliases sFit
+setGeneric("sFit", function(object, ...) standardGeneric("sFit"))
 ##' Get the sFit
 ##'
 ##' @title Accessor for the standards model
@@ -42,8 +46,9 @@ setGeneric("sFit", function(object, ...)
 ##' @param ... not used
 ##' @return the sFit is only defined for CRMN
 ##' @author Henning Redestig
-##' @aliases sFit sFit,nFit-method
+##' @aliases sFit,nFit-method
 ##' @exportMethod sFit
+##' @name sFit-method
 setMethod("sFit", signature(object="nFit"), function(object) object@sFit)
 
 
@@ -100,12 +105,10 @@ setMethod("analytes", signature(object="matrix",
 setMethod("analytes", signature(object="data.frame",
                                  standards="logical"), analytes_other)
 
-
+##' @name makeX-methods
+##' @aliases makeX
 setGeneric("makeX", function(object, factors, ...)
            standardGeneric("makeX"))
-setMethod("makeX", signature(object="ExpressionSet",
-                             factors="character"), makeX_eset)
-
 ##' Construct a design matrix 
 ##'
 ##' Make a design matrix from the pheno data slot of an expression
@@ -118,24 +121,29 @@ setMethod("makeX", signature(object="ExpressionSet",
 ##' @param object an \code{ExpressionSet}
 ##' @param factors column names from the pheno data of \code{object}
 ##'  or a design matrix
+##' @param ... not used
 ##' @return a design matrix
 ##' @exportMethod makeX
-##' @aliases makeX 
+##' @aliases makeX,ANY,matrix-method
 ##' @author Henning Redestig
 ##' @examples
 ##' data(mix)
 ##' makeX(mix, "runorder")
 ##' runorder <- mix$runorder
 ##' makeX(mix, model.matrix(~-1+runorder))
+##' @name makeX-methods
 setMethod("makeX", signature(object="ANY",
                              factors="matrix"), makeX_other)
+##' @name makeX-methods
+##' @aliases makeX,ExpressionSet,character-method
+setMethod("makeX", signature(object="ExpressionSet",
+                             factors="character"), makeX_eset)
 
 
-
+##' @name mexprs-methods
+##' @aliases mexprs
 setGeneric("mexprs", function(object)
            standardGeneric("mexprs"))
-setMethod("mexprs", "ExpressionSet", function(object) exprs(object))
-
 ##' Get the expression data from an \code{ExpressionSet} or
 ##' just return the given matrix
 ##'
@@ -144,22 +152,23 @@ setMethod("mexprs", "ExpressionSet", function(object) exprs(object))
 ##' @usage mexprs(object)
 ##' @return the expression data
 ##' @exportMethod mexprs
-##' @aliases mexprs mexprs,ExpressionSet-method mexprs,matrix-method
+##' @aliases mexprs,matrix-method
 ##' @author Henning Redestig
 ##' @examples
 ##' data(mix)
 ##' head(mexprs(mix))
 ##' head(mexprs(exprs(mix)))
+##' @name mexprs-methods
 setMethod("mexprs", "matrix", function(object) object)
+##' @aliases mexprs,ExpressionSet-method
+##' @name mexprs-methods
+setMethod("mexprs", "ExpressionSet", function(object) exprs(object))
 
 
-##' Matrix safe setter of expression slot
-##'
-##' Accessor. Internal convenience function.
-##' @title Get the expression slot
-##' @name mexprs_bla
+##' @name mexprs-rep-methods
 setGeneric("mexprs<-", function(object, value)
            standardGeneric("mexprs<-"))
+##' @name mexprs-rep-methods
 setReplaceMethod("mexprs", signature("ExpressionSet","matrix"),
                  function(object, value) {
                    exprs(object) <- value
@@ -171,7 +180,7 @@ setReplaceMethod("mexprs", signature("ExpressionSet","matrix"),
 ##' Set the expression data in an \code{ExpressionSet} or
 ##' just return the given matrix
 ##' @title Accessor
-##' @name set_mexprs
+##' @name mexprs-rep-methods
 ##' @param object an \code{ExpressionSet} or \code{matrix}
 ##' @param value the value to assign
 ##' @usage mexprs(object) <- value

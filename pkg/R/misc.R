@@ -157,10 +157,6 @@ analytes_other<- function(object, standards, ...)
 
 ##' Construct a design matrix 
 ##'
-##' Make a design matrix from the pheno data slot of an expression
-##' set, taking care that factors and numerical are handled
-##' properly. No interactions are included and the formula is the most
-##' simple possible, i.e. \code{y~-1+term1+term2+...}
 ##' @title Make X
 ##' @param object an \code{ExpressionSet}
 ##' @param factors column names from the pheno data of \code{object}
@@ -171,6 +167,7 @@ analytes_other<- function(object, standards, ...)
 ##' data(mix)
 ##' makeX(mix, "runorder")
 ##' @author Henning Redestig
+##' @noRd
 makeX_eset <- function(object, factors, ...) {
   x <- pData(object)[,factors,drop=FALSE]
   ## construct a Y matrix (the experiment related information)
@@ -198,6 +195,7 @@ makeX_eset <- function(object, factors, ...) {
 ##' data(mix)
 ##' makeX(mix, model.matrix(~pData(mix)[,"runorder"]))
 ##' @author Henning Redestig
+##' @noRd
 makeX_other <- function(object, factors, ...)
   factors
 
