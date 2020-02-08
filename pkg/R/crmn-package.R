@@ -16,12 +16,16 @@
 #' the manual.
 #'
 #' @name crmn
-#' @aliases crmn
+#' @aliases crmn crmn-package
 #' @docType package
 #' @title CRMN
 #' @import Biobase
 #' @import methods
 #' @import pcaMethods
+#' @importFrom graphics barplot legend par
+#' @importFrom stats anova fitted lm median model.matrix predict resid residuals
+#'     sd
+#' @importFrom utils compareVersion
 #' @author Henning Redestig
 NULL
 
