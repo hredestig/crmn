@@ -335,7 +335,7 @@ normFit <- function(object, method, one="Succinate_d4", factors=NULL, lg=TRUE,
 ##' isIS <- with(fData(mix), tag == "IS")
 ##' normalize(Y, "crmn", factor=G, ncomp=3, standards=isIS)
 normalize <- function(object, method, segments=NULL, ...) {
-  if(class(object) == "ExpressionSet")
+  if(inherits(object, "ExpressionSet"))
     pData(object) <- dropunusedlevels(pData(object))
 
   if(is.null(segments)) {

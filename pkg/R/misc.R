@@ -171,7 +171,7 @@ analytes_other<- function(object, standards, ...)
 makeX_eset <- function(object, factors, ...) {
   x <- pData(object)[,factors,drop=FALSE]
   ## construct a Y matrix (the experiment related information)
-  nm <- sapply(x, class) %in% c("numeric", "integer")
+  nm <- sapply(x, inherits, c("numeric", "integer"))
   fac <- x[,!nm,drop=FALSE]
   mod <- NULL
   for(i in 1:ncol(fac))
