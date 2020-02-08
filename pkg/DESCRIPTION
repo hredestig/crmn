@@ -1,5 +1,5 @@
 Package: crmn
-Version: 0.0.20
+Version: 0.0.21
 Date: 2012-06-19
 Author: Henning Redestig
 Maintainer: Henning Redestig <henning.red@gmail.com>
@@ -15,9 +15,10 @@ License: GPL (>= 3)
 Collate:
     'classes.R'
     'crmn-package.R'
-    'norm.R'
     'misc.R'
+    'norm.R'
     'generic.R'
 Packaged: 2012-07-13 05:41:44 UTC; henning
 Repository: CRAN
 Date/Publication: 2012-07-13 06:55:27
+RoxygenNote: 7.0.2
