@@ -11,7 +11,8 @@
 #' }
 #'
 #' A package implementing the 'Cross-contribution compensating
-#' multiple standard normalization'. Can be used to
+#' multiple standard normalization' described in Redestig et al. (2009)
+#' Analytical Chemistry, https://doi.org/10.1021/ac901143w. Can be used to
 #' normalize metabolomics data. Do \code{openVignette("crmn")} to see
 #' the manual.
 #'
