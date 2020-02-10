@@ -9,9 +9,9 @@ Depends:
     Biobase,
     methods
 Description: Implements the Cross-contribution Compensating Multiple
-    standard Normalization (CCMN) method and other normalization
-    algorithms. Redestig et al. (2009) Analytical Chemistry,
-    https://doi.org/10.1021/ac901143w
+    standard Normalization (CCMN) method described in Redestig et
+    al. (2009) Analytical Chemistry https://doi.org/10.1021/ac901143w
+    and other normalization algorithms.
 URL: https://github.com/hredestig/crmn
 License: GPL (>= 3)
 Collate:
