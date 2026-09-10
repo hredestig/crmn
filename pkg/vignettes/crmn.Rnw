@@ -6,10 +6,9 @@
 
 \title{The crmn Package}
 \author{Henning Redestig\\
-\texttt{henning@psc.riken.jp}\\
-RIKEN Plant Science Center\\
+\texttt{henning.red@gmail.com}\\
+(Formerly at) RIKEN Plant Science Center\\
 Yokohama, Japan\\
-\url{http://www.metabolome.jp/}
 }
 \date{\today}
 

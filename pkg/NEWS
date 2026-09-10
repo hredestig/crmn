@@ -1,5 +1,7 @@
 # -*- org -*-
 
+* Version 0.0.22
+Just docs fixes for R check
 * Version 0.0.16
 the totL2 now also works on matrices with missing data by temporarily setting NA to zero.
 * Version 0.0.15
