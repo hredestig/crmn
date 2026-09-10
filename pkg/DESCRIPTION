@@ -1,8 +1,8 @@
 Package: crmn
 Version: 0.0.22
 Date: 2020-02-09
-Author: Henning Redestig
-Maintainer: Henning Redestig <henning.red@gmail.com>
+Authors@R: person("Henning", "Redestig", email = "henning.red@gmail.com",
+    role = c("aut", "cre"))
 Title: CCMN and Other Normalization Methods for Metabolomics Data
 Encoding: UTF-8
 Depends:
