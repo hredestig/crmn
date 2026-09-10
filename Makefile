@@ -18,8 +18,8 @@ clean:
 	rm -rf pkg/src/*.{so,o,rds}
 	rm -f $(pkg)*.tar.gz
 	rm -rf *.Rcheck
-	find -name .Rhistory -exec rm {} \; 
-	find -name "*~" -exec rm {} \; 
+	find . --name ".Rhistory" -exec rm {} \; 
+	find . --name "*~" -exec rm {} \; 
 
 checkpkg: clean
 	R CMD check pkg

@@ -201,7 +201,7 @@ weightnorm <- function(object, weight="weight", lg=FALSE) {
 ##' normalization, must use the same interfaces as \code{lm}. 
 ##' @param formula if fitfunc has formula interface or not
 ##' @param ... passed on to \code{standardsFit}, \code{standards},
-##'{analytes}
+##' \code{analytes}
 ##' @export
 ##' @return a normalization model
 ##' @seealso \code{normPred}, \code{standards}, \code{model.matrix}
@@ -372,7 +372,7 @@ normalize <- function(object, method, segments=NULL, ...) {
 ##' @param predfunc the function to use to get predicted values from
 ##' the fitted object (only for crmn)
 ##' @param ... passed on to \code{standardsPred}, \code{standardsFit},
-##'ode{standards}, \code{analytes}
+##' \code{standards}, \code{analytes}
 ##' @export
 ##' @return the normalized data
 ##' @seealso \code{normFit}

@@ -4,6 +4,7 @@ Date: 2020-02-09
 Author: Henning Redestig
 Maintainer: Henning Redestig <henning.red@gmail.com>
 Title: CCMN and Other Normalization Methods for Metabolomics Data
+Encoding: UTF-8
 Depends:
     pcaMethods (>= 1.56.0),
     Biobase,
@@ -23,4 +24,4 @@ Collate:
 Packaged: 2012-07-13 05:41:44 UTC; henning
 Repository: CRAN
 Date/Publication: 2012-07-13 06:55:27
-RoxygenNote: 7.0.2
+Config/roxygen2/version: 8.1.0

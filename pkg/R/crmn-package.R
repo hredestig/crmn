@@ -16,9 +16,6 @@
 #' normalize metabolomics data. Do \code{openVignette("crmn")} to see
 #' the manual.
 #'
-#' @name crmn
-#' @aliases crmn crmn-package
-#' @docType package
 #' @title CRMN
 #' @import Biobase
 #' @import methods
@@ -28,7 +25,7 @@
 #'     sd
 #' @importFrom utils compareVersion
 #' @author Henning Redestig
-NULL
+"_PACKAGE"
 
 #' Mixture dilution series
 #'

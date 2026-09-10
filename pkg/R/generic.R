@@ -186,8 +186,7 @@ setReplaceMethod("mexprs", signature("ExpressionSet","matrix"),
 ##' @usage mexprs(object) <- value
 ##' @return the expression data
 ##' @exportMethod "mexprs<-"
-##' @aliases mexprs<- mexprs<-,ExpressionSet,matrix-method
-##'   mexprs<-,matrix,matrix-method
+##' @aliases mexprs<- mexprs<-,ExpressionSet,matrix-method mexprs<-,matrix,matrix-method
 ##' @author Henning Redestig
 ##' @examples
 ##' data(mix)

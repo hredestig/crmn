@@ -21,17 +21,21 @@ exportMethods(standards)
 import(Biobase)
 import(methods)
 import(pcaMethods)
-importFrom(graphics,barplot)
-importFrom(graphics,legend)
-importFrom(graphics,par)
+importFrom(graphics,
+  barplot,
+  legend,
+  par
+)
 importFrom(pcaMethods,method)
-importFrom(stats,anova)
-importFrom(stats,fitted)
-importFrom(stats,lm)
-importFrom(stats,median)
-importFrom(stats,model.matrix)
-importFrom(stats,predict)
-importFrom(stats,resid)
-importFrom(stats,residuals)
-importFrom(stats,sd)
+importFrom(stats,
+  anova,
+  fitted,
+  lm,
+  median,
+  model.matrix,
+  predict,
+  resid,
+  residuals,
+  sd
+)
 importFrom(utils,compareVersion)

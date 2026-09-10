@@ -100,8 +100,7 @@ standards_eset <- function(object, where="tag", what="IS", ...) {
 ##' @param standards a logical vector indicating which rows are internal standards
 ##' @param ... not used
 ##' @return subsetted dataset
-##' @aliases standards_other standards,matrix,logical-method
-##' standards,data.frame,logical-method 
+##' @aliases standards_other standards,matrix,logical-method standards,data.frame,logical-method
 ##' @examples
 ##' data(mix)
 ##' standards(exprs(mix), fData(mix)$tag == 'IS')
@@ -145,8 +144,7 @@ analytes_eset<- function(object, where="tag", what="IS", ...) {
 ##' @param standards a logical vector indicating which rows are
 ##' internal standards
 ##' @param ... not used
-##' @aliases analytes_other analytes,matrix,logical-method
-##' analytes,data.frame,logical-method 
+##' @aliases analytes_other analytes,matrix,logical-method analytes,data.frame,logical-method
 ##' @return \code{ExpressionSet}
 ##' @examples
 ##' data(mix)
