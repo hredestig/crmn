@@ -1,6 +1,6 @@
 Package: crmn
 Version: 0.0.22
-Date: 2020-02-09
+Date: 2026-09-10
 Authors@R: person("Henning", "Redestig", email = "henning.red@gmail.com",
     role = c("aut", "cre"))
 Title: CCMN and Other Normalization Methods for Metabolomics Data
@@ -11,7 +11,7 @@ Depends:
     methods
 Description: Implements the Cross-contribution Compensating Multiple
     standard Normalization (CCMN) method described in Redestig et
-    al. (2009) Analytical Chemistry https://doi.org/10.1021/ac901143w
+    al. (2009) Analytical Chemistry <doi:10.1021/ac901143w>
     and other normalization algorithms.
 URL: https://github.com/hredestig/crmn
 License: GPL (>= 3)
@@ -21,7 +21,4 @@ Collate:
     'misc.R'
     'norm.R'
     'generic.R'
-Packaged: 2012-07-13 05:41:44 UTC; henning
-Repository: CRAN
-Date/Publication: 2012-07-13 06:55:27
 Config/roxygen2/version: 8.1.0

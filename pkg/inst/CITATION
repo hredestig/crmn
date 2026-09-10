@@ -1,15 +1,21 @@
-citHeader("")
-
-citEntry(entry="article",
+bibentry(
+    bibtype = "Article",
     title = "Compensation for systematic cross-contribution improves normalization
 	of mass spectrometry based metabolomics data",
-    author = "Henning Redestig and Atsushi Fukushima and Hans Stenlund and Thomas Moritz and Masanori Arita and Kazuki Saito and Miyako Kusano",
+    author = c(
+        person("Henning", "Redestig"),
+        person("Atsushi", "Fukushima"),
+        person("Hans", "Stenlund"),
+        person("Thomas", "Moritz"),
+        person("Masanori", "Arita"),
+        person("Kazuki", "Saito"),
+        person("Miyako", "Kusano")
+    ),
     journal = "Analytical Chemistry",
     year = 2009,
-    pages ="7974-7980",
+    pages = "7974-7980",
     volume = "81",
-    textVersion = 
+    doi = "10.1021/ac901143w",
+    textVersion =
     paste("Redestig, H.; Fukushima, A.; Stenlund, H.; Moritz, T.; Arita, M.; Saito, K. & Kusano, M. Compensation for systematic cross-contribution improves normalization of mass spectrometry based metabolomics data Anal Chem, 2009, 81, 7974-7980")
     )
-
-citFooter("This free open-source software implements academic research by the authors and co-workers. If you use it, please support the project by citing the appropriate journal articles.")
