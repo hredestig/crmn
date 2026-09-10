@@ -36,7 +36,7 @@ normalization, must use the same interfaces as \code{lm}.}
 \item{formula}{if fitfunc has formula interface or not}
 
 \item{...}{passed on to \code{standardsFit}, \code{standards},
-{analytes}}
+\code{analytes}}
 }
 \value{
 a normalization model

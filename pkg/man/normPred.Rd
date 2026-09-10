@@ -24,7 +24,7 @@ transformed}
 the fitted object (only for crmn)}
 
 \item{...}{passed on to \code{standardsPred}, \code{standardsFit},
-ode{standards}, \code{analytes}}
+\code{standards}, \code{analytes}}
 }
 \value{
 the normalized data
